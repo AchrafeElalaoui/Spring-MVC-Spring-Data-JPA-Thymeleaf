@@ -20,13 +20,22 @@ public class PatientController {
     private PatientRepository patientRepository;
 
     @GetMapping("/index")
-    public String index(Model model, @RequestParam(name="page",defaultValue = "0") int page , @RequestParam(name="size" ,defaultValue = "4") int size) {
+    public String index(Model model,
+                        @RequestParam(name="page",defaultValue = "0") int page ,
+                        @RequestParam(name="size" ,defaultValue = "4") int size,
+                        @RequestParam(name="keyword",defaultValue = "") String kw){
 
-            Page<Patient> pagepatients = patientRepository.findAll(PageRequest.of(page, size));
+            Page<Patient> pagePatients = patientRepository.findByNomContains(kw, PageRequest.of(page, size));
 
-            model.addAttribute("listPatients", pagepatients.getContent());
-            model.addAttribute("pages", new int[pagepatients.getTotalPages()]);
+            model.addAttribute("listPatients", pagePatients.getContent());
+            model.addAttribute("pages", new int[pagePatients.getTotalPages()]);
             model.addAttribute("currentPage", page);
+            model.addAttribute("keyword", kw);
             return "patients";
+        }
+        @GetMapping("/delete")
+        public String delete(Long id){
+            patientRepository.deleteById(id);
+            return "redirect:/index";
         }
     }
