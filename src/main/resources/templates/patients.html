@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+ <h2>List patients</h2>
+    <table class="table">
+    <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Malade</th>
+    <th>Scoure</th>
+    </tr>
+    <tr th:each="patient : ${listPatients}">
+    <td th:text="${patient.id}"></td>
+    <td th:text="${patient.nom}"></td>
+    <td th:text="${patient.dateNaissance}"></td>
+    <td th:text="${patient.malade}"></td>
+    <td th:text="${patient.score}"></td>
+    </tr>
+    </table>
+</body>
+</html>
