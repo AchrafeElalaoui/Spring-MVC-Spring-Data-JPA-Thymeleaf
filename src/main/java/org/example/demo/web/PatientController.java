@@ -52,4 +52,13 @@ public class PatientController {
         patientRepository.save(patient);
         return "redirect:/index";
     }
+    @GetMapping("/editPatient")
+    public String editPatient(Model model, @RequestParam(name = "id")Long id){
+        Patient p = patientRepository.findById(id).orElse(null);
+        if(p == null){
+            throw new RuntimeException("Patient introuvable");
+        }
+        model.addAttribute("patient", p);
+        return "editPatient";
+    }
     }
