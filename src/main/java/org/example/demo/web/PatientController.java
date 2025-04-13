@@ -23,7 +23,7 @@ import java.util.List;
 public class PatientController {
     private PatientRepository patientRepository;
 
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String index(Model model,
                         @RequestParam(name="page",defaultValue = "0") int page ,
                         @RequestParam(name="size" ,defaultValue = "4") int size,
@@ -37,28 +37,29 @@ public class PatientController {
             model.addAttribute("keyword", kw);
             return "patients";
         }
-        @GetMapping("/delete")
+    @GetMapping("/admin/delete")
         public String delete(Long id,String keyword, int page){
             patientRepository.deleteById(id);
-            return "redirect:/index?page="+page+"&keyword="+keyword;
-        }
+        return "redirect:/user/index?page=" + page + "&keyword=" + keyword;
 
-    @GetMapping("/formPatients")
+    }
+
+    @GetMapping("/admin/formPatients")
     public String formPatients(Model model){
         model.addAttribute("patient", new Patient());
         return "formPatients";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/admin/save")
     public String save(Model model, @Valid Patient patient, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "formPatients";
         }
 
         patientRepository.save(patient);
-        return "redirect:/formPatients";
+        return "redirect:/admin/formPatients";
     }
-    @GetMapping("/editPatient")
+    @GetMapping("/admin/editPatient")
     public String editPatient(Model model, @RequestParam(name = "id")Long id){
         Patient p = patientRepository.findById(id).orElse(null);
         if(p == null){

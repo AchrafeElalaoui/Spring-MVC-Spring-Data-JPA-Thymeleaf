@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(ar->ar.requestMatchers("/admin/**").hasRole("ADMIN"))
                 .authorizeHttpRequests(ar->ar.requestMatchers("/user/**").hasRole("USER"))
                 .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .exceptionHandling(customizer -> customizer.accessDeniedPage("/noAuthorized"))
                 .build();
     }
 
