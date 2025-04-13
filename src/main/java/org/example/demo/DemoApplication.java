@@ -10,14 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Date;
 
 @SpringBootApplication
-public class DemoApplication implements CommandLineRunner {
+public class DemoApplication {
     @Autowired
     private PatientRepository patientRepository;
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @Override
     public void run(String... args) throws Exception {
         //add patients
         patientRepository.save(new Patient(null, "Hassan",new Date(), false, 0));
